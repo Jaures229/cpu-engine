@@ -42,6 +42,11 @@ void App::SpawnMissileWithMouse()
 	pMissile->transform.Move(1.5f);
 	pMissile->pMaterial = &m_materialMissile;
 	m_missiles.push_back(pMissile);
+
+
+	// create particule while shooting
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +77,7 @@ void App::OnStart()
 	m_pSprite->y = 0;
 
 	// Shader
-	m_materialShip.color = cpu::ToColor(255, 128, 0);
+	m_materialShip.color = cpu::ToColor(255, 200, 5);
 	m_materialMissile.ps = MissileShader;
 	m_materialMoon.ps = MoonShader;
 	m_materialEarth.pTexture = &m_textureEarth;
@@ -142,7 +147,7 @@ void App::OnUpdate()
 	m_pSprite->y = 60 + cpu::RoundToInt(sinf(time)*20.0f);
 
 	// Turn earth
-	m_pEarth->transform.AddYPR(-dt);
+	m_pEarth->transform.AddYPR(dt);
 
 	// Move rock
 	m_pMoon->transform.OrbitAroundAxis(m_pEarth->transform.pos, CPU_VEC3_UP, 3.0f, time*2.0f);
@@ -175,8 +180,9 @@ void App::OnUpdate()
 	}
 
 	// Fire
-	if ( cpuInput.IsActionPressed() || cpuInput.IsAction(1) )
+	if (cpuInput.IsActionPressed() || cpuInput.IsAction(1)) {
 		cpuApp.SpawnMissileWithMouse();
+	}
 
 	// Purge missiles
 	for ( auto it=m_missiles.begin() ; it!=m_missiles.end() ; )
@@ -307,13 +313,14 @@ void Ship::Update()
 	float dt = cpuTime.delta;
 
 	// Turn ship
-	m_pEntity->transform.AddYPR(dt, dt, dt);
+	if (cpuInput.vi.IsKey(VK_UP))
+		m_pEntity->transform.AddYPR(dt, dt, dt);
 
 	// Move ship
 	m_pEntity->transform.pos.z += dt * 1.0f;
 
 	// Fire
-	if ( cpuInput.vi.IsKey(VK_SPACE) )
+	if (cpuInput.vi.IsKey(VK_SPACE))
 		cpuApp.SpawnMissile();
 }
 
