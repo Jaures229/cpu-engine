@@ -63,7 +63,6 @@ void App::OnUpdate()
 		Game();
 	}
 
-	
 	if (state == PLAYING && cpuInput.IsBackPressed()) {
 		state = PAUSED;
 	} else if (state == PAUSED && cpuInput.IsBackPressed())	{
