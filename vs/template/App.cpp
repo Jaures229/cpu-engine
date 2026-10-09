@@ -132,15 +132,15 @@ void App::UpdateObstacles()
 		if (hit_player) {
 			cpuEngine.Release(pobs);
 			score += 1;
-			it++;
+			it = obstacles.erase(it);
 		}
 		else if (pobs->transform.pos.y <= -1) {
 			cpuEngine.Release(pobs);
 			life -= 1;
-			it++;
+			it = obstacles.erase(it);
 		}
 		else {
-			it++;
+			it++; // N'incrémente que si aucun élément n'a été supprimé
 		}
 	}
 }
