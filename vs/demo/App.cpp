@@ -107,6 +107,7 @@ void App::OnStart()
 	m_pEmitter->rate = 1.0f;
 	m_pEmitter->colorMin = cpu::ToColor(255, 0, 0);
 	m_pEmitter->colorMax = cpu::ToColor(255, 128, 0);
+
 	m_pEmitter2 = cpuEngine.CreateParticleEmitter();
 	m_pEmitter2->rate = 0.25f;
 	m_pEmitter2->colorMin = cpu::ToColor(0, 0, 255);
